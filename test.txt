@@ -1,7 +1,7 @@
-controlador create() , edit()
+///controlador create() , edit()
  $categorias = Categoria::where('estado','=',1)->pluck('nombre', 'id');
 
-view form
+///view form
 <div class="form-group">
             {{ Form::label('categoria_id') }}
             {{ Form::select('categoria_id', $categorias, $libro->categoria_id, ['class' => 'form-control' . ($errors->has('categoria_id') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione categoria']) }}
