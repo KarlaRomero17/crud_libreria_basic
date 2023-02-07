@@ -1,0 +1,14 @@
+ public function getMunicipios(Request $request){
+        $validator = Validator::make($request->all(),[
+            'departamento' => 'required|integer',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $municipios = Municipios::where('id_departamento', $request->get('departamento'))->get();
+
+        return response()->json([
+            'municipios' => $municipios,
+        ], 200);
+    }
