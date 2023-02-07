@@ -33,6 +33,33 @@ ruta
                             </select>
                             
                             //jquery
-  $("#departamento").on('change', function (event) {
-            
+ $("#departamento").on('change', function (event) {
+            event.preventDefault();
+
+            const urlStore = "{{ URL::route('get-municipios' )}}";
+            const params = {
+                'departamento': $("#departamento").val(),
+            };
+            const loading = Swal.fire(loadingSwalObject);
+
+            fetch(urlStore,{
+                headers: headers,
+                method: 'POST',
+                body: JSON.stringify(params),
+            })
+            .then(response => response.json())
+            .then(jsonResponse => {
+                if(jsonResponse.errors){
+                    showFormErrors(jsonResponse.errors);
+                }else{
+                    var selectMunicipios = $("#municipio");
+                    selectMunicipios.html('');
+                    $.each(jsonResponse['municipios'], function (key, municipio){
+                        selectMunicipios.append('<option  value="' + municipio.id + '">' + municipio.nombre + '</option>');
+                    });
+                }
+            })
+            .catch(error => showGenericError(error))
+            .finally(() => loading.close());
         });
+
