@@ -1,4 +1,5 @@
- public function getMunicipios(Request $request){
+//controller
+public function getMunicipios(Request $request){
         $validator = Validator::make($request->all(),[
             'departamento' => 'required|integer',
         ]);
@@ -12,3 +13,26 @@
             'municipios' => $municipios,
         ], 200);
     }
+
+ruta
+
+    Route::post('/get/location/municipios', [PuestoController::class, 'getMunicipios'])
+            ->name('get-municipios');
+
+//view
+ <select class="form-control select2-custom" id="departamento" name="departamento" id="departamento" aria-label="Default select example" {{$disabled}} >
+                                @foreach ($data['departamentos'] as $departamento)
+                                    <option value="{{ $departamento['id'] }}"
+                                        @if($descriptor->id_municipio)
+                                            @if ( $descriptor->municipio->id_departamento == $departamento['id'])
+                                                selected
+                                            @endif
+                                        @endif
+                                    >{{ $departamento['nombre'] }}</option>
+                                @endforeach
+                            </select>
+                            
+                            //jquery
+  $("#departamento").on('change', function (event) {
+            
+        });
